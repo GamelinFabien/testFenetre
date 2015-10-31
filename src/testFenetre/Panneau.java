@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,43 +27,65 @@ public class Panneau extends JPanel {
       /* ground.getLength <=> a
        * ground.getWidth <=> b
        */
-  File file = new File ("Images/map/map1.txt");  
-  FileReader fileReader = new FileReader (file);
-      char caractere = (char) fileReader.read();
-     // System.out.print (caractere);
-      int c = fileReader.read();
-          while (c != -1)
-          {
-              System.out.print ((char) c);
-              c = fileReader.read();
-              
-          }
-          System.out.print ("caca");
-  fileReader.close();
 
+      FileInputStream fis = null;
+      
+      try {
+      	 fis = new FileInputStream(new File("map/map1.txt"));
+         int n = 0;
+         int a = 0;
+         int b = 0;
+        		 
+         while ((n = fis.read()) >= 0) {
+	      	// System.out.println(n+ " : "+(char)n);     	  	 
+	    	// System.out.println(a+ " - "+b);
+	      	 if(n != 13 && n != 10){    		
+		 		 if((char)n == '*'){
+					  g.drawImage(wall, a, b, this);
+				  }
+				  else if((char)n == 'G'){
+					  g.drawImage(grass, a, b, this);
+				  }
+				  else if((char)n == 'D'){
+					  g.drawImage(departure, a, b, this);
+				  }
+				  else if((char)n == 'A'){
+					  g.drawImage(arrival, a, b, this);
+				  }
+				  else if((char)n == 'P'){
+					  g.drawImage(character, a, b, this);
+				  }
+				  else if((char)n == ' '){
+					  g.drawImage(ground, a, b, this);
+				  }
+		 		a+= 26;
+	      	 }
+	      	 else if(n == 10){
+	      		 b += 26;
+	      		 a = 0;
+	      	 }
+
+         }
+        // System.out.println("Copie terminée !");
+
+      } catch (FileNotFoundException e) {
+         e.printStackTrace();
+      } catch (IOException e) {
+         e.printStackTrace();
+      } finally {
+         try {
+            if (fis != null)
+               fis.close();
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      }
          
       
       
 
-      /*scan map*/
-      //for(int a=0; a<100; a++){
-    	//  for(int b=0; b<100; b++){
-    		  /*positionnement des images en fonction des caracteres*/
-    		/*  if(SquareTab[a][b] == "*"){
-    			  g.drawImage(wall, a, b, this);
-    		  }
-    		  else if(SquareTab[a][b] == "G"){
-    			  g.drawImage(grass, a, b, this);
-			  }
-    		  else if(Square[a][b] == "D"){
-    			  g.drawImage(departure, a, b, this);
-			  }
-    		  else if(SquareTab[a][b] == "A"){
-    			  g.drawImage(arrival, a, b, this);
-			  }
-    		  else if(SquareTab[a][b] == " "){
-    			  g.drawImage(ground, a, b, this);
-			  }*/
+
+
     	//  }
 	 // }
 

@@ -6,7 +6,7 @@ public class MaFenetre extends JFrame{
 	
 public MaFenetre(){
 	this.setTitle("Map");
-	this.setSize(400, 400);
+	this.setSize(1265, 1265);
 	this.setLocationRelativeTo(null);
 	
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
